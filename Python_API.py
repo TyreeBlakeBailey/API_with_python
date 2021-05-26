@@ -39,6 +39,17 @@ post_api_response = requests.get("https://api.postcodes.io/postcodes/" + "N160Eh
 # for items in str(post_api_response.json()["result"]):
 #     print(items)
 
+##post practice
+
+def More_data():
+    More_Data = input("Do you want more data? y/n    ").lower()
+    if More_Data == 'y':
+        return True
+    elif More_Data == 'n':
+        return False
+    else:
+        raise KeyError
+
 
 def PostCodeCheck():
     try:
@@ -47,11 +58,13 @@ def PostCodeCheck():
         print(post_api_response.status_code)
         if post_api_response.status_code == 200:
             print(f"Thanks for your request {post_api_response.status_code}")
-            Json_keys = json.loads(json.dumps(post_api_response.json()[ "result" ]))  # prints the list of info
-            for item in Json_keys:
-                print(f"* {item}")
-            User_Choice = input("Choice what extra info you would like ")
-            print(json.dumps(post_api_response.json()[ "result" ][ User_Choice ]))
+            if More_data():
+                #print(json.dumps(post_api_response.json()[ "result" ]))
+                Json_keys = json.loads(json.dumps(post_api_response.json()["result"]))  # prints the list of info
+                for item in Json_keys:
+                    print(f"* {item}")
+                User_Choice = input("Choice what extra info you would like  ")
+                print(json.dumps(post_api_response.json()[ "result" ][ User_Choice ]))
             # allows the user to choice from list of info
             # print(json.dumps(post_api_response.json()["result"]))
             # Will return the content of the page in a JSon format converting it from a dic
@@ -62,5 +75,7 @@ def PostCodeCheck():
     except KeyError:
         print("You entered an invalid choice try again")
         return True
+#can add another loop to continuously ask what information they want from the list
 
-PostCodeCheck()
+while True:
+    PostCodeCheck()
